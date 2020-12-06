@@ -71,10 +71,13 @@ code {
     monospace;
 }
 
-.field-block{
-  background: #eeeeee;
+.upload-form-block{
   opacity: 30;
-  padding: 20px;
+}
+
+.upload-file-button{
+  opacity: 30;
+  padding-top: 10px;
 }
 
 .field-label{

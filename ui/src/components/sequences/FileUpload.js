@@ -52,16 +52,15 @@ let FileUpload = (props) => {
   };
 
   return (
-    <div>
+    <div >
       <form onSubmit={handleSubmit(onFormSubmit)}>
-        <div className={'row field-block'}>
+        <div className={'upload-form-block'}>
           <label className={'field-label'}>
             Upload a JSON file from your desktop
           </label>
           <div>
-          <Field name='file' component={FileInput} type='file'/>
+          <Field name='file' component={FileInput} type='file' />
           </div>
-        </div>
 
         {/*<div>OR</div>*/}
 
@@ -74,8 +73,9 @@ let FileUpload = (props) => {
         {/*  </div>*/}
         {/*</div>*/}
 
-        <div className='center'>
-          <button type='submit' className="btn-small center small-margin-top pink accent-4">Submit</button>
+        <div className='left upload-file-button'>
+          <button type='submit' className="btn-small left small-margin-top pink accent-4">Submit</button>
+        </div>
         </div>
       </form>
     </div>
