@@ -4,13 +4,22 @@
   "description": "A simple web server",
   "main": "app.js",
   "scripts": {
+    "start:prod": "env NODE_ENV=prod SERVER_PORT=443 node app.js",
+    "start:local": "env NODE_ENV=local SERVER_PORT=8080 node app.js",
+    "start:dev": "env NODE_ENV=dev SERVER_PORT=4000 nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Daisy Flemming",
   "license": "BBSD 3-Clause License",
   "dependencies": {
+    "base-64": "^0.1.0",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-fileupload": "^1.1.6",
-    "fs": "0.0.1-security"
+    "fs": "0.0.1-security",
+    "http": "0.0.0",
+    "https": "^1.0.0"
   }
 }

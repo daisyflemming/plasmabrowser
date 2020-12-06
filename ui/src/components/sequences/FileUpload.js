@@ -3,9 +3,10 @@
  */
 import React from 'react'
 import {Field, reduxForm} from 'redux-form';
-import {post} from "axios";
+import axios from "axios";
 import {addSequence} from "../../redux/actions/sequenceActions";
 import {connect} from "react-redux";
+import {uploadFile} from "../../index";
 
 const adaptFileEventToValue = delegate => e => delegate(e.target.files[0]);
 const FileInput = ({
@@ -27,21 +28,14 @@ const FileInput = ({
 let FileUpload = (props) => {
   const { handleSubmit} = props;
   const onFormSubmit = (data) => {
-
     console.log(data);
-    if (data instanceof String){
-      alert(data)
-    }
-    const url = process.env.REACT_APP_UPLOAD_URL;
-
-    // else a file is uploaded
     let formData = new FormData();
     formData.append('File', data.file);
     const config = {
       headers: { 'content-type': 'multipart/form-data' }
     };
-    console.log(url);
-    post(url, formData, config)
+    console.log(uploadFile);
+    axios.post(uploadFile, formData, config)
       .then(function(response) {
         let counts = response.data.counts;
         let annotations = response.data.annotations;
@@ -69,16 +63,17 @@ let FileUpload = (props) => {
           </div>
         </div>
 
-        <div>OR</div>
+        {/*<div>OR</div>*/}
 
-        <div className={'row field-block'}>
-          <label className={'field-label'}>
-            Enter a url of the JSON file
-          </label>
-          <div>
-          <Field name='fileUrl' component='input' type='text'/>
-          </div>
-        </div>
+        {/*<div className={'row field-block'}>*/}
+        {/*  <label className={'field-label'}>*/}
+        {/*    Enter a url of the JSON file*/}
+        {/*  </label>*/}
+        {/*  <div>*/}
+        {/*  <Field name='fileUrl' component='input' type='text'/>*/}
+        {/*  </div>*/}
+        {/*</div>*/}
+
         <div className='center'>
           <button type='submit' className="btn-small center small-margin-top pink accent-4">Submit</button>
         </div>
