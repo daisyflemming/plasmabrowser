@@ -52,7 +52,7 @@ let FileUpload = (props) => {
   };
 
   return (
-    <div >
+    <div>
       <form onSubmit={handleSubmit(onFormSubmit)}>
         <div className={'upload-form-block'}>
           <label className={'field-label'}>
