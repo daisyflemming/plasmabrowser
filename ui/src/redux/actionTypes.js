@@ -1,0 +1,1 @@
+export const FORM ='@@redux-form/CHANGE';

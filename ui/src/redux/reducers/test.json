@@ -1,0 +1,65 @@
+{
+  "counts": [
+    {
+      "count": 0,
+      "name": "Plasmid",
+      "range": [
+        {
+          "start": 0,
+          "end": 199
+        }
+      ]
+    },
+    {
+      "count": 383,
+      "name": "Plasmid",
+      "range": [
+        {
+          "start": 200,
+          "end": 200
+        }
+      ]
+    },
+    {
+      "count": 473,
+      "name": "Plasmid",
+      "range": [
+        {
+          "start": 201,
+          "end": 201
+        }
+      ]
+    }
+  ],
+  "annotations": [
+    [
+      {
+        "Gene": "Heavy Chain",
+        "range": [
+          {
+            "start": 201,
+            "end": 1845
+          }
+        ]
+      },
+      {
+        "Gene": "Light Chain",
+        "range": [
+          {
+            "start": 2246,
+            "end": 3419
+          }
+        ]
+      },
+      {
+        "Gene": "MmGlul",
+        "range": [
+          {
+            "start": 3820,
+            "end": 5707
+          }
+        ]
+      }
+    ]
+  ]
+}

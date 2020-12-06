@@ -1,0 +1,90 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.root {
+  padding: 20px
+}
+
+.large-box {
+  height: 150px
+}
+
+.form-input {
+  margin-bottom: 20px;
+}
+
+.required {
+  color: #b71c1c;
+}
+
+.material-icons{
+  display: inline-flex;
+  vertical-align: top;
+}
+
+.button-margin {
+  margin-right: 10px;
+}
+
+nav .badge{
+  position: relative;
+  top: 0;
+  right: 0;
+}
+.sequence-modal{
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+  height: 100%;
+}
+
+.color-T{
+   color: #c51162
+}
+
+.color-C{
+  color: #4db6ac
+}
+
+.color-G{
+  color: #1976d2
+}
+
+.color-A{
+  color: #512da8
+}
+
+.truncate {
+  width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.field-block{
+  background: #eeeeee;
+  opacity: 30;
+  padding: 20px;
+}
+
+.field-label{
+  color: #666666;
+  font-size: 14px;
+}
+
+.json-content{
+  color: #666666;
+  font-size: 10px;
+  overflow-y:auto;
+  height: 800px;
+}
