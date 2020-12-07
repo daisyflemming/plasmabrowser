@@ -7,7 +7,7 @@ class ImportSequences extends React.Component {
   render() {
     return (
       <div className='container root'>
-        <div className='row root'>
+        <div className='row'>
           <div className={'col s8'}>
             <div className={'row'}>
               <FileUploadComponent/>

@@ -1,4 +1,4 @@
-import React, {Component, useEffect, useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {connect} from 'react-redux';
 import {create_UUID} from "../utils/commons";
 import * as d3 from 'd3';
@@ -23,10 +23,30 @@ const prepareDataPoints = (expressionCounts) =>{
 }
 
 const createBarChart =(svg, data) =>{
-  svg.append("circle")
-    .attr("cx", 150)
-    .attr("cy", 70)
-    .attr("r",  50)
+  let margin = 100,
+    width = svg.attr("width") - margin,
+    height = svg.attr("height") - margin;
+  let xScale = d3.scaleLinear()
+    .domain([d3.min(data, function(d) { return d.range[0].start; }), d3.max(data, function(d) { return d.range[0].start; })])
+    .range([0, width])
+  let yScale = d3.scaleLinear()
+    .domain([0, d3.max(data, function(d) { return d.count; })])
+    .range([height, 0])
+  let g = svg.append("g").attr("transform", "translate(" + 50 + "," + 50 + ")");
+  g.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(xScale).tickFormat(function(d){
+      return d;
+    }).ticks(5));
+  g.append("g")
+    .call(d3.axisLeft(yScale).tickFormat(function(d){
+      return d;
+    }).ticks(5))
+    .append("text")
+    .attr("y", 6)
+    .attr("dy", "0.71em")
+    .attr("text-anchor", "end")
+    .text("value");
 }
 
 const BarPlot =(props) => {
@@ -38,7 +58,7 @@ const BarPlot =(props) => {
   }, [])
 
   return(
-    <svg ref={ref}></svg>
+    <svg ref={ref} width={500} height={400}></svg>
   )
 };
 

@@ -16,11 +16,11 @@ class JsonViewer extends Component {
                   &emsp;{"{"}<br/>
                   &ensp;&emsp;"count": {s.count},<br/>
                   &ensp;&emsp;"name": "{s.name}",<br/>
-                  &ensp;&emsp;"range": {s.range.map(x =>
+                  &ensp;&emsp;"range": {"["} {s.range.map(x =>
                     <span key={'range_' + create_UUID()}>
                   {"{"} "start": {x.start}, "end": {x.end} {"}"}
                 </span>
-                )}<br/>
+                )}{"]"}<br/>
                   &emsp;{"}"},<br/>
                 </div>
               )

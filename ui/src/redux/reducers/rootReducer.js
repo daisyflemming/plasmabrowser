@@ -1,5 +1,5 @@
 import data from './sequences';
-import geneExpression from './test';
+import geneExpression from './sampleCounts';
 
 const initState = {
   sequences: data.sequences,
@@ -9,14 +9,12 @@ const initState = {
 
 const rootReducer = (state = initState, action) => {
   if (action.type === 'ADD_SEQUENCE'){
-    let newSequence = {
-      sequenceCounts: action.counts,
-      sequenceAnnotations: action.annotations,
-    }
-    let sequences = [...state.sequences, newSequence];
+    let expressionCounts = action.counts,
+      expressionAnnotations = action.annotations;
     return {
       ...state,
-      sequences: sequences
+      expressionCounts,
+      expressionAnnotations
     }
   }
   return state;
