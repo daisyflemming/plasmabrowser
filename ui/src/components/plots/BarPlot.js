@@ -22,16 +22,19 @@ const prepareDataPoints = (expressionCounts) =>{
   })
 }
 
+const createBarChart =(svg, data) =>{
+  svg.append("circle")
+    .attr("cx", 150)
+    .attr("cy", 70)
+    .attr("r",  50)
+}
 
 const BarPlot =(props) => {
   const ref = useRef();
   let {expressionCounts, expressionAnnotations} = props;
   useEffect(() => {
     const svg = d3.select(ref.current)
-    svg.append("circle")
-      .attr("cx", 150)
-      .attr("cy", 70)
-      .attr("r",  50)
+    createBarChart(svg, expressionCounts);
   }, [])
 
   return(
