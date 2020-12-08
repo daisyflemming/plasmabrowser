@@ -7,13 +7,9 @@ const createBarChart =(svg, data) =>{
     width = svg.attr("width") - margin,
     height = svg.attr("height") - margin;
 
-  const xScaleValue = [];
-  for (let i = Math.min(data.x); i <= Math.min(data.x2); i++) {
-    xScaleValue.push(i);
-  }
-
+  const xValues = data.map(d => d.x);
   let xScale = d3.scaleBand()
-    .domain(data.map(function(d) { return d.x; }))
+    .domain(xValues)
     .range([0, width])
     .padding(0.4);
   let yScale = d3.scaleLinear()
@@ -39,9 +35,10 @@ const createBarChart =(svg, data) =>{
     .data(data)
     .enter().append("rect")
     .attr("class", "bar")
+    .attr("fill", "#ad1457")
     .attr("x", function(d) { return xScale(d.x); })
     .attr("y", function(d) { return yScale(d.y); })
-    .attr("width", xScale.bandwidth()*width)
+    .attr("width", xScale.bandwidth())
     .attr("height", function(d) { return height - yScale(d.y); });
 }
 
@@ -50,12 +47,13 @@ const BarPlot =(props) => {
   let {expressionCounts, expressionAnnotations} = props;
   let data = [];
   expressionCounts.map(s => {
-    data.push({
-      x: s.range[0].start,
-      y: s.count,
-      x2: s.range[0].end,
-      width: s.range[0].end - s.range[0].start +1})
-  });
+    let count = s.count;
+    let start = s.range[0].start;
+    let width = s.range[0].end - start+1;
+    for (let i=0; i<width; i++) {
+      data.push({ x: start+i, y: count})
+    }
+  })
   useEffect(() => {
     const svg = d3.select(ref.current)
     createBarChart(svg, data);
