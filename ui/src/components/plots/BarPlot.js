@@ -12,6 +12,11 @@ const createBarChart =(svg, data) =>{
     .domain(xValues)
     .range([0, width])
     .padding(0.4);
+  // limit no. of ticks marks on x-axis
+  let spacing = Math.pow(10, Math.floor(Math.log10(Math.max(...xValues))));
+  let xAxis = d3.axisBottom(xScale)
+    .tickValues(xScale.domain().filter(function(d,i){ return !(i%spacing)}));
+
   let yScale = d3.scaleLinear()
     .domain([0, d3.max(data, function(d) { return d.y; })])
     .range([height, 0])
@@ -19,9 +24,7 @@ const createBarChart =(svg, data) =>{
   console.log(xScale.bandwidth())
   g.append("g")
     .attr("transform", "translate(0," + height + ")")
-    .call(d3.axisBottom(xScale).tickFormat(function(d){
-      return d;
-    }).ticks(10));
+    .call(xAxis);
   g.append("g")
     .call(d3.axisLeft(yScale).tickFormat(function(d){
       return d;
