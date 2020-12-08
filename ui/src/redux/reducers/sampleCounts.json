@@ -1,6 +1,16 @@
 {
   "counts": [
     {
+      "count": 300,
+      "name": "Plasmid",
+      "range": [
+        {
+          "start": 195,
+          "end": 199
+        }
+      ]
+    },
+    {
       "count": 383,
       "name": "Plasmid",
       "range": [
