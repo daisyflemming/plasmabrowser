@@ -5,7 +5,7 @@
       "name": "Plasmid",
       "range": [
         {
-          "start": 195,
+          "start": 197,
           "end": 199
         }
       ]
@@ -36,24 +36,19 @@
       "range": [{ "start": 202, "end": 202 }]
     },
     {
-      "count": 874,
+      "count": 450,
       "name": "Plasmid",
       "range": [{ "start": 203, "end": 203 }]
     },
     {
-      "count": 982,
+      "count": 350,
       "name": "Plasmid",
       "range": [{ "start": 204, "end": 204 }]
     },
     {
-      "count": 1001,
+      "count": 0,
       "name": "Plasmid",
-      "range": [{ "start": 205, "end": 205 }]
-    },
-    {
-      "count": 1126,
-      "name": "Plasmid",
-      "range": [{ "start": 206, "end": 206 }]
+      "range": [{ "start": 205, "end": 209 }]
     }
   ],
   "annotations": [
