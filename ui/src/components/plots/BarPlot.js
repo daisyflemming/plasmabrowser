@@ -7,20 +7,20 @@ const createBarChart =(svg, data) =>{
     width = svg.attr("width") - margin,
     height = svg.attr("height") - margin;
 
-  const xScaleValue = data.reduce((acc, curr) => {
-    return acc + curr.x
-  }, 0)
+  const xScaleValue = [];
+  for (let i = Math.min(data.x); i <= Math.min(data.x2); i++) {
+    xScaleValue.push(i);
+  }
 
-  let xScale = d3.scaleLinear()
-    .domain([
-      d3.min(data, function(d) { return d.x; }),
-      d3.max(data, function(d) { return d.x; })
-    ])
+  let xScale = d3.scaleBand()
+    .domain(data.map(function(d) { return d.x; }))
     .range([0, width])
+    .padding(0.4);
   let yScale = d3.scaleLinear()
     .domain([0, d3.max(data, function(d) { return d.y; })])
     .range([height, 0])
   let g = svg.append("g").attr("transform", "translate(" + 50 + "," + 50 + ")");
+  console.log(xScale.bandwidth())
   g.append("g")
     .attr("transform", "translate(0," + height + ")")
     .call(d3.axisBottom(xScale).tickFormat(function(d){
@@ -41,7 +41,7 @@ const createBarChart =(svg, data) =>{
     .attr("class", "bar")
     .attr("x", function(d) { return xScale(d.x); })
     .attr("y", function(d) { return yScale(d.y); })
-    .attr("width", function(d) { return xScale(d.width); })
+    .attr("width", xScale.bandwidth()*width)
     .attr("height", function(d) { return height - yScale(d.y); });
 }
 
@@ -50,7 +50,11 @@ const BarPlot =(props) => {
   let {expressionCounts, expressionAnnotations} = props;
   let data = [];
   expressionCounts.map(s => {
-    data.push({x: s.range[0].start, y: s.count, width: s.range[0].end})
+    data.push({
+      x: s.range[0].start,
+      y: s.count,
+      x2: s.range[0].end,
+      width: s.range[0].end - s.range[0].start +1})
   });
   useEffect(() => {
     const svg = d3.select(ref.current)
