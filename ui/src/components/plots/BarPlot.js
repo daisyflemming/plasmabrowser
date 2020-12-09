@@ -7,6 +7,7 @@ const createBarChart =(svg, data) =>{
     width = svg.attr("width") - margin,
     height = svg.attr("height") - margin;
 
+  // set up x-axis and values
   const xValues = data.map(d => d.x);
   let xScale = d3.scaleBand()
     .domain(xValues)
@@ -15,20 +16,25 @@ const createBarChart =(svg, data) =>{
   // limit no. of ticks marks on x-axis
   let spacing = Math.pow(10, Math.floor(Math.log10(Math.max(...xValues))));
   let xAxis = d3.axisBottom(xScale)
-    .tickValues(xScale.domain().filter(function(d,i){ return !(i%spacing)}));
+    .tickValues(xScale.domain().filter(function(d,i){
+      return !(i%spacing)
+    }));
 
+  // set up y-axis and values
   let yScale = d3.scaleLinear()
     .domain([0, d3.max(data, function(d) { return d.y; })])
     .range([height, 0])
+  let yAxis = d3.axisLeft(yScale).tickFormat(function(d){
+    return d;
+  }).ticks(5);
+
+  //assemble the plot
   let g = svg.append("g").attr("transform", "translate(" + 50 + "," + 50 + ")");
-  console.log(xScale.bandwidth())
   g.append("g")
     .attr("transform", "translate(0," + height + ")")
     .call(xAxis);
   g.append("g")
-    .call(d3.axisLeft(yScale).tickFormat(function(d){
-      return d;
-    }).ticks(5))
+    .call(yAxis)
     .append("text")
     .attr("y", 6)
     .attr("dy", "0.71em")
