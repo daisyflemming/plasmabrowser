@@ -7,29 +7,38 @@ const createBarChart =(svg, data) =>{
     width = svg.attr("width") - margin,
     height = svg.attr("height") - margin;
 
-  // set up x-axis and values
+  let xDomain = d3.extent(data, function(d) { return d.x; });
+  let yDomain = d3.extent(data, function(d) { return d.y; });
+
+
+  // set up scale
   const xValues = data.map(d => d.x);
-  let xScale = d3.scaleBand()
-    .domain(xValues)
-    .range([0, width])
-    .padding(0.4);
+  let xScale = d3.scaleLinear().domain(xDomain).range([0, width])
+  let yScale = d3.scaleLinear().domain(yDomain).range([height, 0]);
+
+  // set up x-axis and values
   // limit no. of ticks marks on x-axis
   let spacing = Math.pow(10, Math.floor(Math.log10(Math.max(...xValues))));
-  let xAxis = d3.axisBottom(xScale)
-    .tickValues(xScale.domain().filter(function(d,i){
-      return !(i%spacing)
-    }));
+  let xAxis = d3.axisBottom(xScale);
+  let yAxis = d3.axisLeft(yScale);
 
-  // set up y-axis and values
-  let yScale = d3.scaleLinear()
-    .domain([0, d3.max(data, function(d) { return d.y; })])
-    .range([height, 0])
-  let yAxis = d3.axisLeft(yScale).tickFormat(function(d){
-    return d;
-  }).ticks(5);
+  let line = d3.line()
+    .x(function(d) { return xScale(d.x); })
+    .y(function(d) { return yScale(d.y); });
 
-  //assemble the plot
+  let area = d3.area()
+    .x(function(d) { return xScale(d.x); })
+    .y0(function(d) { return yScale(d.y); })
+    .y1(height);
+
+  //assemble the plot with line
   let g = svg.append("g").attr("transform", "translate(" + 50 + "," + 50 + ")");
+
+  g.append('path')
+    .datum(data)
+    .attr('class', 'area')
+    .attr('d', area);
+
   g.append("g")
     .attr("transform", "translate(0," + height + ")")
     .call(xAxis);
@@ -40,15 +49,55 @@ const createBarChart =(svg, data) =>{
     .attr("dy", "0.71em")
     .attr("text-anchor", "end")
     .text("value");
-  g.selectAll(".bar")
-    .data(data)
-    .enter().append("rect")
-    .attr("class", "bar")
-    .attr("fill", "#ad1457")
-    .attr("x", function(d) { return xScale(d.x); })
-    .attr("y", function(d) { return yScale(d.y); })
-    .attr("width", xScale.bandwidth())
-    .attr("height", function(d) { return height - yScale(d.y); });
+
+  g.append('path')
+    .datum(data)
+    .attr('class', 'line')
+    .attr('d', line);
+
+  // g.selectAll('circle').data(data).enter().append('circle')
+  //   .attr('cx', function(d) { return xScale(d.x); })
+  //   .attr('cy', function(d) { return yScale(d.y); })
+  //   .attr('r', 1)
+  //   .attr('class', 'circle');
+
+  // focus tracking
+  let focus = g.append('g').style('display', 'none');
+  focus.append('line')
+    .attr('id', 'focusLineX')
+    .attr('class', 'focusLine');
+  focus.append('line')
+    .attr('id', 'focusLineY')
+    .attr('class', 'focusLine');
+  focus.append('circle')
+    .attr('id', 'focusCircle')
+    .attr('r', 1)
+    .attr('class', 'circle focusCircle');
+
+  let bisectX = d3.bisector(function(d) { return d.x; }).left;
+
+  g.append("rect")
+    .attr("class", "overlay")
+    .attr('width', width)
+    .attr('height', height)
+    .on('mouseover', function() { focus.style('display', null); })
+    .on('mouseout', function() { focus.style('display', 'none'); })
+    .on('mousemove', function() {
+      let mouse = d3.mouse(this);
+      let mouseX = xScale.invert(mouse[0]);
+      let i = bisectX(data, mouseX); // returns the index to the current data item
+      let d = data[i];
+      let x = xScale(d.x);
+      let y = yScale(d.y);
+
+      focus.select('#focusLineX')
+        .attr('x1', x).attr('y1', yScale(yDomain[0]))
+        .attr('x2', x).attr('y2', yScale(yDomain[1]));
+      focus.select('#focusLineY')
+        .attr('x1', xScale(xDomain[0])).attr('y1', y)
+        .attr('x2', xScale(xDomain[1])).attr('y2', y);
+    });
+
 }
 
 const BarPlot =(props) => {

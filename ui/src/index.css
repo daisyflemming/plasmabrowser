@@ -91,3 +91,59 @@ code {
   overflow-y:auto;
   height: 800px;
 }
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.line {
+  fill: none;
+  stroke: #f48fb1;
+  stroke-width: 1px;
+}
+
+.circle {
+  fill: #d81b60;
+  stroke: none;
+  stroke-width: 1px;
+}
+
+.area {
+  fill: #ad1457;
+  stroke: none;
+  opacity: 0.1;
+}
+
+.zeroline {
+  fill: none;
+  stroke: red;
+  stroke-width: 0.5px;
+  stroke-dasharray: 5 5;
+}
+
+.zerolinetext {
+  fill: red;
+}
+
+.overlay {
+  fill: none;
+  stroke: none;
+  pointer-events: all;
+}
+
+.focusLine {
+  fill: none;
+  stroke: #4a148c;
+  stroke-width: 0.5px;
+}
+
+.focusCircle {
+  fill: red;
+}

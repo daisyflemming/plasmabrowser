@@ -1,5 +1,5 @@
 import data from './sequences';
-import geneExpression from './sampleCounts';
+import geneExpression from './counts';
 
 const initState = {
   sequences: data.sequences,
