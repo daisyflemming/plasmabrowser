@@ -3,13 +3,13 @@ import {connect} from 'react-redux';
 import * as d3 from 'd3';
 
 const createBarChart =(svg, data) =>{
+  //credit: based on http://bl.ocks.org/mikehadlow/93b471e569e31af07cd3
   let margin = 100,
     width = svg.attr("width") - margin,
     height = svg.attr("height") - margin;
 
   let xDomain = d3.extent(data, function(d) { return d.x; });
   let yDomain = d3.extent(data, function(d) { return d.y; });
-
 
   // set up scale
   const xValues = data.map(d => d.x);
@@ -31,7 +31,7 @@ const createBarChart =(svg, data) =>{
     .y0(function(d) { return yScale(d.y); })
     .y1(height);
 
-  //assemble the plot with line
+  //assemble the plot
   let g = svg.append("g").attr("transform", "translate(" + 50 + "," + 50 + ")");
 
   g.append('path')
@@ -50,16 +50,23 @@ const createBarChart =(svg, data) =>{
     .attr("text-anchor", "end")
     .text("value");
 
+  // add tooltip
+  let label = g.append("text")
+    .attr("x", width)
+    .attr("y", 0)
+    .style("text-anchor", "end");
+
+  // add line
   g.append('path')
     .datum(data)
     .attr('class', 'line')
     .attr('d', line);
 
-  // g.selectAll('circle').data(data).enter().append('circle')
-  //   .attr('cx', function(d) { return xScale(d.x); })
-  //   .attr('cy', function(d) { return yScale(d.y); })
-  //   .attr('r', 1)
-  //   .attr('class', 'circle');
+  g.selectAll('circle').data(data).enter().append('circle')
+    .attr('cx', function(d) { return xScale(d.x); })
+    .attr('cy', function(d) { return yScale(d.y); })
+    .attr('r', 1)
+    .attr('class', 'circle');
 
   // focus tracking
   let focus = g.append('g').style('display', 'none');
@@ -69,10 +76,10 @@ const createBarChart =(svg, data) =>{
   focus.append('line')
     .attr('id', 'focusLineY')
     .attr('class', 'focusLine');
-  focus.append('circle')
-    .attr('id', 'focusCircle')
-    .attr('r', 1)
-    .attr('class', 'circle focusCircle');
+  // focus.append('circle')
+  //   .attr('id', 'focusCircle')
+  //   .attr('r', 5)
+  //   .attr('class', 'circle focusCircle');
 
   let bisectX = d3.bisector(function(d) { return d.x; }).left;
 
@@ -96,11 +103,15 @@ const createBarChart =(svg, data) =>{
       focus.select('#focusLineY')
         .attr('x1', xScale(xDomain[0])).attr('y1', y)
         .attr('x2', xScale(xDomain[1])).attr('y2', y);
+
+      label.text(function() {
+        return "pos = " + d.x + ", counts = " + d.y;
+      });
     });
 
 }
 
-const BarPlot =(props) => {
+const AreaPlotCrosshair =(props) => {
   const ref = useRef();
   let {expressionCounts, expressionAnnotations} = props;
   let data = [];
@@ -130,5 +141,5 @@ const mapStateToProps = (state, ownProps) => {
   }
 };
 
-export default connect(mapStateToProps)(BarPlot);
+export default connect(mapStateToProps)(AreaPlotCrosshair);
 

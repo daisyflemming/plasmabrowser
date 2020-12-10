@@ -1,7 +1,8 @@
 import React from 'react';
 import FileUploadComponent from './FileUpload';
 import JsonViewer from './JsonViewer';
-import BarPlot from "../plots/BarPlot";
+import AreaPlotCrosshair from "../plots/AreaPlotCrosshair";
+import BarPlotZoom from "../plots/BarPlotZoom";
 
 class ImportSequences extends React.Component {
   render() {
@@ -13,7 +14,10 @@ class ImportSequences extends React.Component {
               <FileUploadComponent/>
             </div>
             <div className={'row'} id={'barPlot'}>
-              <BarPlot/>
+              <AreaPlotCrosshair/>
+            </div>
+            <div className={'row'} id={'barPlot'}>
+              <BarPlotZoom/>
             </div>
           </div>
           <div className={'col s4'}>
