@@ -18,7 +18,7 @@ const createStackedBar =(svg, data) =>{
   let zScale = d3.scaleOrdinal().range(["#ffffff", "#98abc5"]).domain(keys);
 
   //assemble the plot
-  let g = svg.append("g").attr("transform", "translate(" + margin*0.75  + "," + margin + ")");
+  let g = svg.append("g").attr("transform", "translate(" + margin*0.75  + "," + margin*0.5 + ")");
 
   g.append("g")
     .selectAll("g")
