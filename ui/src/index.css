@@ -86,10 +86,11 @@ code {
 }
 
 .json-content{
+  background-color: #eeeeee;
   color: #666666;
   font-size: 10px;
   overflow-y:auto;
-  height: 800px;
+  height: 520px;
 }
 
 svg {

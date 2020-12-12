@@ -5,7 +5,7 @@ const Home = () => (
     <h3>Home</h3>
     <div className={'card'}>
       <div className={'card-content'}>
-        <span className={'card-title'}>Welcome to Plasma Browser!</span>
+        <span className={'card-title'}>Welcome to Sequence Browser!</span>
         <p>
           This tool enables scientists to visualize RNA sequences.
         </p>

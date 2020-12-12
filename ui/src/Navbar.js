@@ -19,7 +19,6 @@ let Navbar = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    sequences: state.rootReducer.sequences
   }
 };
 
