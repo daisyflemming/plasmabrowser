@@ -84,7 +84,6 @@ let FileUpload = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    tcga_sequences: state.rootReducer.sequences.map(a => a.sequence),
   }
 };
 

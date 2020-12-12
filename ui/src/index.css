@@ -92,6 +92,10 @@ code {
   height: 800px;
 }
 
+svg {
+  font: 11px sans-serif;
+}
+
 .axis path,
 .axis line {
   fill: none;
@@ -121,17 +125,6 @@ code {
   opacity: 0.1;
 }
 
-.zeroline {
-  fill: none;
-  stroke: red;
-  stroke-width: 0.5px;
-  stroke-dasharray: 5 5;
-}
-
-.zerolinetext {
-  fill: red;
-}
-
 .overlay {
   fill: none;
   stroke: none;
@@ -140,10 +133,6 @@ code {
 
 .focusLine {
   fill: none;
-  stroke: #4a148c;
-  stroke-width: 0.5px;
-}
-
-.focusCircle {
-  fill: red;
+  stroke: #3f51b5;
+  stroke-width: 0.7px;
 }

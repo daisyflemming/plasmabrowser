@@ -1,8 +1,6 @@
-import data from './sequences';
 import geneExpression from './counts';
 
 const initState = {
-  sequences: data.sequences,
   expressionCounts: geneExpression.counts,
   expressionAnnotations: geneExpression.annotations
 }

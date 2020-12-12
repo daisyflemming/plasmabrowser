@@ -37,10 +37,11 @@ const createStackedBar =(svg, data) =>{
     .attr('transform', 'translate(0,0)')
     .call(d3.axisLeft(yScale));
 
-  g.append('g')
-    .attr('class', 'axis')
-    .attr('transform', 'translate(0,'+height+')')				// New line
-    .call(d3.axisBottom(xScale))					//  .call(d3.axisLeft(y).ticks(null, 's'))
+  //remove x-axis
+  // g.append('g')
+  //   .attr('class', 'axis')
+  //   .attr('transform', 'translate(0,'+height+')')
+  //   .call(d3.axisBottom(xScale))
 }
 
 const createBarChart =(svg, data) =>{
