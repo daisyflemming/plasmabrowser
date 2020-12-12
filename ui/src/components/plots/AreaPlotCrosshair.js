@@ -2,9 +2,51 @@ import React, {useEffect, useRef} from 'react';
 import {connect} from 'react-redux';
 import * as d3 from 'd3';
 
+const createStackedBar =(svg, data) =>{
+  let margin = svg.attr("margin"),
+    width = svg.attr("width") - margin,
+    height = (svg.attr("height") - margin)*0.2;
+
+  // set up domain
+  const xDomain = [0, d3.max(data, function(d) { return d.total; })];
+  const yDomain = data.map(function(d) { return d.gene; })
+  const keys = ['bar1', 'bar2']
+
+  // set up scale
+  let xScale = d3.scaleLinear().domain(xDomain).rangeRound([0, width]).domain(xDomain).nice();
+  let yScale = d3.scaleBand().range([0, height]).paddingInner(0.05).align(0.1).domain(yDomain);
+  let zScale = d3.scaleOrdinal().range(["#ffffff", "#98abc5"]).domain(keys);
+
+  //assemble the plot
+  let g = svg.append("g").attr("transform", "translate(" + margin*0.75  + "," + margin + ")");
+
+  g.append("g")
+    .selectAll("g")
+    .data(d3.stack().keys(keys)(data))
+    .enter().append("g")
+    .attr("fill", function(d) { return zScale(d.key); })
+    .selectAll("rect")
+    .data(function(d) { return d; })
+    .enter().append("rect")
+    .attr("y", function(d) { return yScale(d.data.gene); })	    //.attr("x", function(d) { return x(d.data.State); })
+    .attr("x", function(d) { return xScale(d[0]); })			    //.attr("y", function(d) { return y(d[1]); })
+    .attr("width", function(d) { return xScale(d[1]) - xScale(d[0]); })	//.attr("height", function(d) { return y(d[0]) - y(d[1]); })
+    .attr("height", yScale.bandwidth());						    //.attr("width", x.bandwidth());
+
+  g.append("g")
+    .attr("class", "axis")
+    .attr("transform", "translate(0,0)") 						//  .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisLeft(yScale));									//   .call(d3.axisBottom(x));
+
+  g.append("g")
+    .attr("class", "axis")
+    .attr("transform", "translate(0,"+height+")")				// New line
+    .call(d3.axisBottom(xScale))					//  .call(d3.axisLeft(y).ticks(null, "s"))
+}
+
 const createBarChart =(svg, data) =>{
-  //credit: based on http://bl.ocks.org/mikehadlow/93b471e569e31af07cd3
-  let margin = 100,
+  //credit: http://bl.ocks.org/mikehadlow/93b471e569e31af07cd3
+  let margin = svg.attr("margin"),
     width = svg.attr("width") - margin,
     height = svg.attr("height") - margin;
 
@@ -12,13 +54,11 @@ const createBarChart =(svg, data) =>{
   let yDomain = d3.extent(data, function(d) { return d.y; });
 
   // set up scale
-  const xValues = data.map(d => d.x);
   let xScale = d3.scaleLinear().domain(xDomain).range([0, width])
   let yScale = d3.scaleLinear().domain(yDomain).range([height, 0]);
 
   // set up x-axis and values
   // limit no. of ticks marks on x-axis
-  let spacing = Math.pow(10, Math.floor(Math.log10(Math.max(...xValues))));
   let xAxis = d3.axisBottom(xScale);
   let yAxis = d3.axisLeft(yScale);
 
@@ -32,7 +72,7 @@ const createBarChart =(svg, data) =>{
     .y1(height);
 
   //assemble the plot
-  let g = svg.append("g").attr("transform", "translate(" + 50 + "," + 50 + ")");
+  let g = svg.append("g").attr("transform", "translate(" + margin*0.75 + "," + margin*0.5 + ")");
 
   g.append('path')
     .datum(data)
@@ -76,10 +116,6 @@ const createBarChart =(svg, data) =>{
   focus.append('line')
     .attr('id', 'focusLineY')
     .attr('class', 'focusLine');
-  // focus.append('circle')
-  //   .attr('id', 'focusCircle')
-  //   .attr('r', 5)
-  //   .attr('class', 'circle focusCircle');
 
   let bisectX = d3.bisector(function(d) { return d.x; }).left;
 
@@ -113,8 +149,10 @@ const createBarChart =(svg, data) =>{
 
 const AreaPlotCrosshair =(props) => {
   const ref = useRef();
+  const refBar = useRef();
+
   let {expressionCounts, expressionAnnotations} = props;
-  let data = [];
+  let data = [], annotations = [];
   expressionCounts.map(s => {
     let count = s.count;
     let start = s.range[0].start;
@@ -122,14 +160,27 @@ const AreaPlotCrosshair =(props) => {
     for (let i=0; i<width; i++) {
       data.push({ x: start+i, y: count})
     }
+  });
+  expressionAnnotations[0].map(s => {
+    let gene = s.Gene;
+    let total = s.range[0].end;
+    let bar1 = s.range[0].start;
+    let bar2 = s.range[0].end - bar1;
+    annotations.push({ gene: gene, bar1: bar1, bar2: bar2, total: total})
   })
+
   useEffect(() => {
     const svg = d3.select(ref.current)
     createBarChart(svg, data);
+    const svg1 = d3.select(refBar.current)
+    createStackedBar(svg1, annotations);
   }, [])
 
   return(
-    <svg ref={ref} width={500} height={400}></svg>
+    <div>
+    <svg ref={ref} width={500} height={400} margin={100}></svg>
+    <svg ref={refBar} width={500} height={300} margin={100}></svg>
+    </div>
   )
 };
 
