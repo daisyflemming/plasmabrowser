@@ -50,8 +50,8 @@ const createBarChart =(svg, data) =>{
     width = svg.attr('width') - margin,
     height = svg.attr('height') - margin;
 
-  let xDomain = d3.extent(data, function(d) { return d.x; });
-  let yDomain = d3.extent(data, function(d) { return d.y; });
+  let xDomain = [0, d3.max(data, function(d) { return d.x; })];
+  let yDomain = [0, d3.max(data, function(d) { return d.y; })];
 
   // set up scale
   let xScale = d3.scaleLinear().domain(xDomain).range([0, width])
@@ -130,19 +130,21 @@ const createBarChart =(svg, data) =>{
       let mouseX = xScale.invert(mouse[0]);
       let i = bisectX(data, mouseX); // returns the index to the current data item
       let d = data[i];
-      let x = xScale(d.x);
-      let y = yScale(d.y);
+      if (d) {
+        let x = xScale(d.x);
+        let y = yScale(d.y);
 
-      focus.select('#focusLineX')
-        .attr('x1', x).attr('y1', yScale(yDomain[0]))
-        .attr('x2', x).attr('y2', yScale(yDomain[1]));
-      focus.select('#focusLineY')
-        .attr('x1', xScale(xDomain[0])).attr('y1', y)
-        .attr('x2', xScale(xDomain[1])).attr('y2', y);
+        focus.select('#focusLineX')
+          .attr('x1', x).attr('y1', yScale(yDomain[0]))
+          .attr('x2', x).attr('y2', yScale(yDomain[1]));
+        focus.select('#focusLineY')
+          .attr('x1', xScale(xDomain[0])).attr('y1', y)
+          .attr('x2', xScale(xDomain[1])).attr('y2', y);
 
-      label.text(function() {
-        return 'pos = ' + d.x + ', counts = ' + d.y;
-      });
+        label.text(function () {
+          return 'pos = ' + d.x + ', counts = ' + d.y;
+        });
+      }
     });
 
 }
