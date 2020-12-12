@@ -1,9 +1,4 @@
-import geneExpression from './counts';
-
-const initState = {
-  expressionCounts: [],
-  expressionAnnotations: []
-}
+const initState = {}
 
 const rootReducer = (state = initState, action) => {
   if (action.type === 'ADD_SEQUENCE'){
@@ -15,6 +10,14 @@ const rootReducer = (state = initState, action) => {
       expressionAnnotations
     }
   }
+  if (action.type === 'TOGGLE_LOADING'){
+    let loading = ! state.loading ? true: false;
+      return {
+        ...state,
+        loading
+      }
+  }
+
   return state;
 }
 

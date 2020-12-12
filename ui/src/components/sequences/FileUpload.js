@@ -7,6 +7,7 @@ import axios from "axios";
 import {addSequence} from "../../redux/actions/sequenceActions";
 import {connect} from "react-redux";
 import {uploadFile} from "../../index";
+import { toggleLoading } from '../../redux/actions/rootActions';
 
 const adaptFileEventToValue = delegate => e => delegate(e.target.files[0]);
 const FileInput = ({
@@ -26,9 +27,9 @@ const FileInput = ({
 };
 
 let FileUpload = (props) => {
-  const { handleSubmit} = props;
+  const { handleSubmit, toggleLoading} = props;
   const onFormSubmit = (data) => {
-    console.log(data);
+    toggleLoading();
     let formData = new FormData();
     formData.append('File', data.file);
     const config = {
@@ -37,6 +38,7 @@ let FileUpload = (props) => {
     console.log(uploadFile);
     axios.post(uploadFile, formData, config)
       .then(function(response) {
+        toggleLoading();
         let counts = response.data.counts;
         let annotations = response.data.annotations;
         if (counts){
@@ -47,6 +49,7 @@ let FileUpload = (props) => {
         }
       })
       .catch(function(error) {
+        toggleLoading();
         window.alert(error);
       });
   };
@@ -90,6 +93,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addSequence: (counts, annotations) => dispatch(addSequence(counts, annotations)),
+    toggleLoading: () => dispatch(toggleLoading()),
   }
 };
 
