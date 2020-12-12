@@ -68,6 +68,14 @@ const uploadFile = (req, res) =>{
   });
 };
 
+const hello = (req, res) =>{
+  res.send('Hello World!')
+};
+
 app
   .route('/api/uploadFile')
   .post(uploadFile);
+
+app
+  .route('/api/hello')
+  .get(hello);
