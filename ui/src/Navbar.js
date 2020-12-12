@@ -3,7 +3,6 @@ import { Link, NavLink, withRouter } from 'react-router-dom'
 import {connect} from "react-redux";
 
 let Navbar = (props) => {
-  let { sequences } = props;
   return (
     <nav className="nav-wrapper purple darken-4">
       <div className="container">
