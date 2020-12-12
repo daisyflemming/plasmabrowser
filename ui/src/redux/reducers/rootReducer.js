@@ -1,8 +1,8 @@
 import geneExpression from './counts';
 
 const initState = {
-  expressionCounts: geneExpression.counts,
-  expressionAnnotations: geneExpression.annotations
+  expressionCounts: [],
+  expressionAnnotations: []
 }
 
 const rootReducer = (state = initState, action) => {

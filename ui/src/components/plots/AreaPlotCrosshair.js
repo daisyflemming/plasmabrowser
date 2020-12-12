@@ -155,7 +155,7 @@ const AreaPlotCrosshair =(props) => {
 
   let {expressionCounts, expressionAnnotations} = props;
   let data = [], annotations = [];
-  expressionCounts.map(s => {
+  expressionCounts && expressionCounts.map(s => {
     let count = s.count;
     let start = s.range[0].start;
     let width = s.range[0].end - start+1;
@@ -163,7 +163,7 @@ const AreaPlotCrosshair =(props) => {
       data.push({ x: start+i, y: count})
     }
   });
-  expressionAnnotations[0].map(s => {
+  expressionAnnotations && expressionAnnotations[0] && expressionAnnotations[0].map(s => {
     let gene = s.Gene;
     let total = s.range[0].end;
     let bar1 = s.range[0].start;
