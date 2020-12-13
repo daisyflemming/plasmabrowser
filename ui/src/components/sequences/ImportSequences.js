@@ -3,7 +3,6 @@ import FileUpload from './FileUpload';
 import AreaPlotCrosshair from "../plots/AreaPlotCrosshair";
 import JsonViewer from "./JsonViewer";
 import {connect} from "react-redux";
-import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import {create_UUID} from "../utils/commons";
 
 const ImportSequences = (props) => {
