@@ -8,7 +8,7 @@ import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 const ImportSequences = (props) => {
   const {expressionCounts, expressionAnnotations, loading} = props;
   return (
-    <div className='container root'>
+    <div className='container'>
       <div className='row'>
             <FileUpload/>
       </div>
