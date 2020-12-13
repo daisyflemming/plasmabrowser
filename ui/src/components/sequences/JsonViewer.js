@@ -28,8 +28,7 @@ class JsonViewer extends Component {
           }
           &ensp;],<br/>
 
-          &ensp;"annotations": [<br/>
-          &emsp;[<br/>
+          &ensp;"annotations": [<br/>&emsp;[<br/>
           {
             expressionAnnotations[0].map(a => {
               return (
