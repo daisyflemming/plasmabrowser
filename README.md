@@ -33,16 +33,17 @@ Start the full application through Express server at http://localhost:8080/
 % env NODE_ENV=local SERVER_PORT=8080 node app.js
 ```
 
-## In production
+## In production with SSL
 
-Start the full application through Express server at http://localhost:8080/
+Start the full application through Express server at https://localhost:443/. 
+Note: You will need to follow the cloud provider SSL policy and set up the environment accordingly.
 ```
 % git clone https://github.com/daisyflemming/plasmabrowser.git
 % cd plasmabrowser/ui; rm -rf build/;npm install;npm run build
-% cd ../server; npm install; env NODE_ENV=prod SERVER_PORT=8080 node app.js
+% cd ../server; npm install; env NODE_ENV=prod SERVER_PORT=443 node app.js
 ```
 
-## Deploy with docker container
+## Deploy locally with docker container
 ```
 % git clone https://github.com/daisyflemming/plasmabrowser.git
 % cd plasmabrowser
