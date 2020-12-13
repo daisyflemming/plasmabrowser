@@ -4,6 +4,7 @@ import AreaPlotCrosshair from "../plots/AreaPlotCrosshair";
 import JsonViewer from "./JsonViewer";
 import {connect} from "react-redux";
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+import {create_UUID} from "../utils/commons";
 
 const ImportSequences = (props) => {
   const {expressionCounts, expressionAnnotations, loading} = props;
@@ -23,11 +24,11 @@ const ImportSequences = (props) => {
 
       {(!expressionCounts || !expressionAnnotations || expressionAnnotations.length === 0 || loading) ? null :
         <div className='row'>
-          <div className={'col s8'} id={'barPlot'}>
-            <AreaPlotCrosshair/>
+          <div className={'col s8'}>
+            <AreaPlotCrosshair key={'areaplot_'+create_UUID()} />
           </div>
-          <div className={'col s4'} id={'jsonViewer'}>
-            <JsonViewer/>
+          <div className={'col s4'}>
+            <JsonViewer key={'jsonviewer_'+create_UUID()}/>
           </div>
 
         </div>
