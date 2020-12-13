@@ -13,7 +13,7 @@ const createStackedBar =(svg, data) =>{
   const keys = ['bar1', 'bar2']
 
   // set up scale
-  let xScale = d3.scaleLinear().domain(xDomain).rangeRound([0, width]).domain(xDomain).nice();
+  let xScale = d3.scaleLinear().rangeRound([0, width]).domain(xDomain).nice();
   let yScale = d3.scaleBand().range([0, height]).paddingInner(0.05).align(0.1).domain(yDomain);
   let zScale = d3.scaleOrdinal().range(['#ffffff', '#98abc5']).domain(keys);
 
@@ -37,11 +37,11 @@ const createStackedBar =(svg, data) =>{
     .attr('transform', 'translate(0,0)')
     .call(d3.axisLeft(yScale));
 
-  //remove x-axis
-  // g.append('g')
-  //   .attr('class', 'axis')
-  //   .attr('transform', 'translate(0,'+height+')')
-  //   .call(d3.axisBottom(xScale))
+  // remove x-axis
+  g.append('g')
+    .attr('class', 'axis')
+    .attr('transform', 'translate(0,'+height+')')
+    .call(d3.axisBottom(xScale))
 }
 
 const createBarChart =(svg, data) =>{
@@ -54,7 +54,7 @@ const createBarChart =(svg, data) =>{
   let yDomain = [0, d3.max(data, function(d) { return d.y; })];
 
   // set up scale
-  let xScale = d3.scaleLinear().domain(xDomain).range([0, width])
+  let xScale = d3.scaleLinear().domain(xDomain).range([0, width]).nice();
   let yScale = d3.scaleLinear().domain(yDomain).range([height, 0]);
 
   // set up x-axis and values
