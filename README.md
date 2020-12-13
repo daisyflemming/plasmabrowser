@@ -7,7 +7,6 @@
 ##### 1. start the Express server at http://localhost:4000/
 ```
 % git clone https://github.com/daisyflemming/plasmabrowser.git
-### modify the .env file to reflect the database setting
 % cd plasmabrowser/server; npm install
 % env NODE_ENV=dev nodemon app.js
 ```
